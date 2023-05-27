@@ -3,6 +3,7 @@ const bodyParser=require("body-parser");
 const https=require("https");
 const app=express();
 let Tasks=[];
+let work=[];
 app.set("view engine","ejs")
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
@@ -24,4 +25,10 @@ app.post("/",(req,res)=>{
   Tasks.push(req.body.task);
   res.redirect("/");
 });
-
+app.get("/work",(req,res)=>{
+  res.render("list",{kindOfDay:"Work List",newTasks:work});
+});
+app.post("/work",(req,res)=>{
+  work.push(req.body.task);
+  res.redirect("/work");
+});
